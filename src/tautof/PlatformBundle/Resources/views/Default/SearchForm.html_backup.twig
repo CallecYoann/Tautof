@@ -1,0 +1,19 @@
+<html>
+
+    <body>
+
+        <form class="" action="{{path('validForm')}}" method="get">
+            <select id="" name="marque">
+                {% for Marque in Marques %}
+                <option value="{{Marque.id}}">
+                    {{Marque.nom }}
+                </option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="OK">
+            
+        </form>
+
+
+    </body>
+</html>

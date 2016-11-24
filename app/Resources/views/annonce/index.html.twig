@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<style>
+table, th, td {
+  /*border: 1px solid black;
+  border-collapse: collapse;*/
+  text-align: center;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+    <h1>Liste d'annonces</h1><br><br>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Marque</th>
+                <th>Modele</th>
+                <th>Couleur</th>
+                <th>Boite</th>
+                <th>Prix</th>
+                <th>Km</th>
+                <th>Photo1</th>
+                <th>Photo2</th>
+                <th>Photo3</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for annonce in annonces %}
+            <tr>
+                <td>{{ annonce.id }}</td>
+                <td><a href="{{ path('annonce_show', { 'id': annonce.id }) }}">{{ annonce.titre }}</a></td>
+                <td>{{ annonce.description }}</td>
+                <td>{{ annonce.modele.marque }}</td>
+                <td>{{ annonce.modele.nom }}</td>
+                <td>{{ annonce.couleur.nom }} </td>
+                <td>{{ annonce.boite }}</td>
+                <td>{{ annonce.prix }}</td>
+                <td>{{ annonce.km }}</td>
+                <td>{{ annonce.photo1 }}</td>
+                <td>{{ annonce.photo2 }}</td>
+                <td>{{ annonce.photo3 }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('annonce_show', { 'id': annonce.id }) }}" class="btn btn-primary" role="button" >show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('annonce_edit', { 'id': annonce.id }) }}" class="btn btn-success" role="button">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('annonce_new') }}">Create a new annonce</a>
+        </li>
+    </ul>
+{% endblock %}

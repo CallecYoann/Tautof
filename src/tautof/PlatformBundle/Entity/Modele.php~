@@ -1,0 +1,43 @@
+<?php
+
+namespace tautof\PlatformBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Modele
+ *
+ * @ORM\Table(name="Modele", indexes={@ORM\Index(name="marque_id", columns={"marque_id"})})
+ * @ORM\Entity
+ */
+class Modele
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=125, nullable=false)
+     */
+    private $nom = '';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \tautof\PlatformBundle\Entity\Marque
+     *
+     * @ORM\ManyToOne(targetEntity="tautof\PlatformBundle\Entity\Marque")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="marque_id", referencedColumnName="id")
+     * })
+     */
+    private $marque;
+
+
+}
+

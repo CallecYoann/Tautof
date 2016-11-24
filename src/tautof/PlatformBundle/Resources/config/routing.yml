@@ -1,0 +1,8 @@
+homeSearch:
+    path:     /
+    defaults: { _controller: tautofPlatformBundle:Search:findAll }
+
+validForm:
+    path:    /filter
+    defaults: { _controller: tautofPlatformBundle:Search:result }
+   

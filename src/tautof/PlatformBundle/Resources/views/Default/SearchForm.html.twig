@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}    
+        <select id="MarqueFiltre" class="form-control" name="MarqueFiltre" placeholder="Marques">
+                <option value="" disabled selected>Choisir la marque</option>
+            {% for Marque in Marques %}
+                <option value="{{ Marque.id }}" {% if marque == Marque.id %}selected{% endif %}>{{ Marque.nom }}</option>
+            {% endfor %}
+        </select>
+    <br>
+   
+    
+    <h1>Liste d'annonces</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th id="advert-id"><a href="#" onclick="sortby('id');">#</a><span class="glyphicon"></span></th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Marque</th>
+                <th id="advert-modele"><a href="#" onclick="sortby('modele');">Modèle</a><span class="glyphicon"></span></th>
+                <th>Couleur</th>
+                <th>Boite</th>
+                <th id="advert-prix"><a href="#" onclick="sortby('prix');">Prix </a><span class="glyphicon"></span></th>
+                <th id="advert-km"><a href="#" onclick="sortby('km');">km </a><span class="glyphicon"></span></th>
+                <th>Photo1</th>
+                
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for Annonce in Annonces %}
+                <tr>
+                    <td>{{ Annonce.id }}</td>
+                    <td>{{ Annonce.titre }}</td>
+                    <td>{{ Annonce.description }}</td>
+                    <td>{{ Annonce.modele.marque }}</td>
+                    <td>{{ Annonce.modele.nom }}</td>
+                    <td>{{ Annonce.couleur.nom }} </td>
+                    <td>{{ Annonce.boite }}</td>
+                    <td>{{ Annonce.prix }}</td>
+                    <td>{{ Annonce.km }}</td>
+                    <td>{{ Annonce.photo1 }}</td>
+                    
+                    <td>
+
+                    </td>
+                </tr>
+    
+{% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var make = document.getElementById('MarqueFiltre');
+        
+         make.onchange = function() {
+            location.href="{{ path('validForm') }}?marque=" + this.value;
+        };
+        
+        
+           //get parameter from url by name
+        function getParameterByName(name) {
+
+            var  url = window.location.href;
+
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results || !results[2]) return null;
+
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+        
+
+        
+        var baseURL = '{{ path('validForm') }}?marque={{ marque }}';
+        
+        //toggle
+        var orderBy = getParameterByName('orderby');
+        //if not set, default is sortby id DESC
+        if (!orderBy) orderBy = 'DESC';
+ 
+        
+        var  toggleClass = 'glyphicon-triangle-top';
+        if (orderBy==='DESC') toggleClass = "glyphicon-triangle-bottom";
+    
+        //
+         var sortBy = getParameterByName('sortby');
+         if (!sortBy) sortBy = 'id';
+         
+        var link = document.querySelector('#advert-'+sortBy+'  span');
+        link.classList.add(toggleClass);
+        
+       
+        
+        function sortby(name){
+            
+            var orderBy = getParameterByName('orderby');
+            if (orderBy==='DESC') 
+                orderBy='ASC';
+            else
+                orderBy='DESC';
+            
+            location.href = baseURL + '&sortby=' + name + '&orderby=' + orderBy;
+        }
+
+
+
+       
+
+        /*
+function toggleClass(){
+	if ((modeleasc.className === "modeleshow") && (modeledesc.className === "modelehide")){
+            
+		modeleasc.className = "modelehide";
+                                   modeledesc.className = "modeleshow";
+	} else {
+		modeleasc.className = "modeleshow";
+                                   modeledesc.className = "modelehide";
+                
+	}
+}
+
+*/
+
+    </script>
+        
+{% endblock %}
+

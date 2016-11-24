@@ -1,0 +1,15 @@
+tautof_platform_utilisateur:
+    resource: "@tautofPlatformBundle/Controller/UtilisateurController.php"
+    type:     annotation
+
+tautof_platform_annonce:
+    resource: "@tautofPlatformBundle/Controller/AnnonceController.php"
+    type:     annotation
+
+
+tautof_platform:
+    resource: "@tautofPlatformBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
