@@ -2,40 +2,39 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Tautof Enterprise{% endblock %}</title>
         {% block stylesheets %}
-        
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <style>
-        table, th, td {
-            /*border: 1px solid black;
-            border-collapse: collapse;*/
-            text-align: center;
-        }
-        
-             .prixdesc {
-            display: none;
-        }
-        
-            .modelehide {
-            display: none;
-        }
-        
-            .modeleshow {
-            display: block;
-        }
-        
-            .kmdesc {
-            display: none;
-        }
-    </style>  
-            
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+            <style>
+
+            </style>  
+
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Tautof Enterprise</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Accueil</a></li>
+                    <li><a href="#" class="login">Se connecter</a></li>
+                    <li><a href="#" class="signup">S'inscrire</a></li>
+                    <li>
+                        {% block login %}{% endblock %}
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    {% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>
