@@ -1,4 +1,4 @@
-homeSearch:
+annonce_index:
     path:     /
     defaults: { _controller: tautofPlatformBundle:Search:findAll }
 
@@ -6,3 +6,19 @@ validForm:
     path:    /filter
     defaults: { _controller: tautofPlatformBundle:Search:result }
    
+   
+annonce_form:
+    path:    /new
+    defaults: { _controller: tautofPlatformBundle:Annonce:new }
+   
+annonce_edit:
+    path:    /edit/{id}
+    defaults: { _controller: tautofPlatformBundle:Annonce:edit }
+   
+annonce_show:
+    path:    /show/{id}
+    defaults: { _controller: tautofPlatformBundle:Annonce:show }   
+    
+annonce_delete:
+    path:    /delete/{id}
+    defaults: { _controller: tautofPlatformBundle:Annonce:delete }

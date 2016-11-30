@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}    
+    <h1 class="titleHome">Liste d'annonces</h1>  
     <select id="MarqueFiltre" class="form-control" data-style="btn-primary" name="MarqueFiltre" placeholder="Marques" >
         <option value="" disabled selected>Choisir la marque</option>
         {% for Marque in Marques %}
@@ -9,44 +10,36 @@
     </select>
     <br>
 
-    
-    <h1>Liste d'annonces</h1>
-    <table class="table table-hover">
+
+    <table class="table table-hover" id="triBarre">
         <thead>
             <tr>
-                <th id="advert-id"><a href="#" onclick="sortby('id');">#</a><span class="glyphicon"></span></th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Marque</th>
+                <th>Trier par : </th>
+                <th id="advert-id"><a href="#" onclick="sortby('id');">Date</a><span class="glyphicon"></span></th>
                 <th id="advert-modele"><a href="#" onclick="sortby('modele');">Modèle</a><span class="glyphicon"></span></th>
-                <th>Couleur</th>
-                <th>Boite</th>
                 <th id="advert-prix"><a href="#" onclick="sortby('prix');">Prix </a><span class="glyphicon"></span></th>
                 <th id="advert-km"><a href="#" onclick="sortby('km');">km </a><span class="glyphicon"></span></th>
             </tr>
         </thead>
-
-        <tbody>
-            {% for Annonce in Annonces %}
-                <tr>
-                    <td>{{ Annonce.id }}</td>
-                    <td>{{ Annonce.titre }}</td>
-                    <td>{{ Annonce.description }}</td>
-                    <td>{{ Annonce.modele.marque }}</td>
-                    <td>{{ Annonce.modele.nom }}</td>
-                    <td>{{ Annonce.couleur.nom }} </td>
-                    <td>{{ Annonce.boite }}</td>
-                    <td>{{ Annonce.prix }}</td>
-                    <td>{{ Annonce.km }}</td>  
-                </tr>
-            </tbody>
-
-        {% endfor %}
     </table>
 
-    <form id="boutonIndex" action="/">
-        <input type="submit" value="Retour Index" />
-    </form>
+
+    {% for Annonce in Annonces %}
+
+            <div class="liste"> 
+                <a href ="{{ path('annonce_show',  {'id': Annonce.id })}}">
+                    <div class="div">
+                        <span><img class="photoTitre" src="/uploads/photos/{{ Annonce.photo1 }}" ></span>
+                        <span class="titleh2">{{ Annonce.titre }}</span>
+                        <span class="marque">{{ Annonce.modele.marque }}</span>
+                        <span class="modele">{{ Annonce.modele.nom }}</span>
+                        <span>{{ Annonce.couleur.nom }} </span>
+                        <span>{{ Annonce.prix }} €</span>
+
+                    </div>
+                </a>
+            </div>
+    {% endfor %}
 
 {% endblock %}
 

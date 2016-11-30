@@ -4,66 +4,140 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Tautof Enterprise{% endblock %}</title>
         {% block stylesheets %}
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-            
-    <style>
-        table, th, td {
-            /*border: 1px solid black;
-            border-collapse: collapse;*/
-            text-align: center;
-        }
-        
-             .prixdesc {
-            display: none;
-        }
-        
-            .modelehide {
-            display: none;
-        }
-        
-            .modeleshow {
-            display: block;
-        }
-        
-            .kmdesc {
-            display: none;
-        }
-        
-        #boutonIndex {
-            text-align: center;
-        }
-        
-        #MarqueFiltre {
-            text-align: center;
-            width: 17%;
-            margin-left: auto;
-            margin-right: auto;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-color: #337AB7;
-            color: white;
-        }
-    </style>  
-            
+            <style>
+
+                body {
+                    background-color: #42667F;
+                }
+
+                table, th, td {
+                    /*border: 1px solid black;
+                    border-collapse: collapse;*/
+                    text-align: center;
+                }
+
+                .prixdesc {
+                    display: none;
+                }
+
+                .modelehide {
+                    display: none;
+                }
+
+                .modeleshow {
+                    display: block;
+                }
+
+                .kmdesc {
+                    display: none;
+                }
+
+                #boutonIndex {
+                    text-align: center;
+                }
+
+                #MarqueFiltre {
+                    text-align: center;
+                    width: 17%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    background-color: #2B2E33;
+                    color: white;
+                }
+
+                .photoTitre {
+                    height:150px;
+                    width:230px;
+                    border-radius: 10px 0 0 10px;
+                }
+
+                a {
+                    color: inherit;
+                }
+
+                a:hover {
+                    text-decoration: none;
+                }
+
+
+                .liste {
+                    {#            background-color: white;#}
+                    margin-right: 4%;
+                    border-radius: 10px;
+                }
+
+
+                .div {
+                    margin: 0 0 10px 4% ;
+                    background-color: #2B2E33;
+                    border-radius: 10px;
+                    color: white;
+                    padding: 1%;
+                }
+
+                .div:hover {
+                    background-color: #ededed;
+                    border-radius: 10px;
+                    color:black;
+                }
+
+                .titleh2 {
+                    margin-left: 50px;
+                    font-size: 28px;
+                }
+
+                .titleHome {
+                    color: white;
+                    text-align: center;
+                    font-family:Helvetica;
+                }
+                #triBarre{
+                    color: white;
+                }
+
+
+            </style>  
+
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
 
     <header>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">Tautof Enterprise</a>
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="/">Accueil</a></li>
-                    <li><a href="#" class="login">Se connecter</a></li>
-                    <li><a href="#" class="signup">S'inscrire</a></li>
-                    <li>
-                        {% block login %}{% endblock %}
-                    </li>
+                    <li><a href="/new">Déposer une annonce</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li><a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Se déconnecter</a></li>
+                        {% else %}
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="glyphicon glyphicon-log-in"></span> Se connecter<span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <form class="form-inline text-right" action="{{ path("fos_user_security_check") }}" method="post">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    <label for="username"><input type="text" class="form-control" id="username" name="_username" placeholder="Utilisateur" required="required"></label>
+                                    <label for="password"><input type="password" class="form-control" id="password" name="_password" placeholder="Mot de passe" required="required"></label>
+                                    <label for="remember_me"><input type="checkbox" id="remember_me" name="_remember_me" value="on" hidden></label>
+                                    <button type="submit" id="_submit" name="_submit" class="btn btn-success"><span></span>Ok</button>
+                                </form>
+                            </div>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

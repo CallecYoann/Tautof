@@ -5,7 +5,9 @@ namespace tautof\PlatformBundle\Controller;
 use tautof\PlatformBundle\Entity\Annonce;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Annonce controller.
@@ -14,12 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  */
 class AnnonceController extends Controller
 {
-    /**
-     * Lists all annonce entities.
-     *
-     * @Route("/", name="annonce_index")
-     * @Method("GET")
-     */
+
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -31,12 +28,7 @@ class AnnonceController extends Controller
         ));
     }
 
-    /**
-     * Creates a new annonce entity.
-     *
-     * @Route("/new", name="annonce_new")
-     * @Method({"GET", "POST"})
-     */
+
     public function newAction(Request $request)
     {
         $annonce = new Annonce();
@@ -45,8 +37,16 @@ class AnnonceController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            
+            $file = $annonce->getPhoto1();
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $fileName = $this->get('app.photo1_uploader')->upload($file);
+            $annonce->setPhoto1($fileName);
             $em->persist($annonce);
             $em->flush($annonce);
+            //$annonce->setPhoto1(new File($this->getParameter('photo1_directory').'/'.$annonce->getPhoto1()));
 
             return $this->redirectToRoute('annonce_show', array('id' => $annonce->getId()));
         }
@@ -57,12 +57,7 @@ class AnnonceController extends Controller
         ));
     }
 
-    /**
-     * Finds and displays a annonce entity.
-     *
-     * @Route("/{id}", name="annonce_show")
-     * @Method("GET")
-     */
+
     public function showAction(Annonce $annonce)
     {
         $deleteForm = $this->createDeleteForm($annonce);
@@ -73,12 +68,7 @@ class AnnonceController extends Controller
         ));
     }
 
-    /**
-     * Displays a form to edit an existing annonce entity.
-     *
-     * @Route("/{id}/edit", name="annonce_edit")
-     * @Method({"GET", "POST"})
-     */
+
     public function editAction(Request $request, Annonce $annonce)
     {
         $deleteForm = $this->createDeleteForm($annonce);
@@ -98,12 +88,7 @@ class AnnonceController extends Controller
         ));
     }
 
-    /**
-     * Deletes a annonce entity.
-     *
-     * @Route("/{id}", name="annonce_delete")
-     * @Method("DELETE")
-     */
+
     public function deleteAction(Request $request, Annonce $annonce)
     {
         $form = $this->createDeleteForm($annonce);
@@ -134,6 +119,3 @@ class AnnonceController extends Controller
         ;
     }
 }
-
-
- 

@@ -5,12 +5,14 @@ namespace tautof\PlatformBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class AnnonceType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
+    
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('titre')
@@ -20,7 +22,7 @@ class AnnonceType extends AbstractType
                 ->add('boite')
                 ->add('prix')
                 ->add('km')
-                ->add('photo1')
+                ->add('photo1' , FileType::class, array('label' => 'photo1 (PDF file)'))
                 ->add('photo2')
                 ->add('photo3');
     }
